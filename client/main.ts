@@ -1,4 +1,8 @@
 import { bootstrap } from 'angular2-meteor-auto-bootstrap';
-import { AppComponent } from './components';
+import { AppComponent } from './app/app.component';
+import {disableDeprecatedForms, provideForms } from '@angular/forms';
 
-bootstrap(AppComponent);
+bootstrap(AppComponent, [
+  disableDeprecatedForms(),
+  provideForms()
+]);
