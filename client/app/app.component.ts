@@ -1,25 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import template from './app.component.html';
-import {Party} from '../../both/models';
-import {Parties} from '../../both/collections/parties.collection';
-import {PartiesFormComponent} from '../imports/parties/parties-form.component';
+import {ROUTER_DIRECTIVES} from '@angular/router';
 
 @Component({
   selector: 'app',
   template,
   styleUrls: ['./app.component.css'],
-  directives: [PartiesFormComponent]
+  directives: [ROUTER_DIRECTIVES]
 })
-export class AppComponent implements OnInit {
-  parties:Mongo.Cursor<Party>;
-
+export class AppComponent {
   constructor(){}
-
-  ngOnInit() {
-    this.parties = <Mongo.Cursor<Party>>Parties.find();
-  }
-
-  remove(party:Party) {
-    Parties.remove(party._id);
-  }
 }
