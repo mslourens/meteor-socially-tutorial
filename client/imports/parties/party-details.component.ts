@@ -1,6 +1,6 @@
 import {Component, OnInit, NgZone} from '@angular/core';
 import template from './party-details.component.html';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Parties} from '../../../both/collections/parties.collection';
 import {Party} from '../../../both/models/party.model';
 import {Tracker} from 'meteor/tracker';
@@ -15,7 +15,7 @@ export class PartyDetailsComponent implements OnInit{
   partyId:string;
   party:Party;
 
-  constructor(private route:ActivatedRoute, private ngZone:NgZone) {}
+  constructor(private route:ActivatedRoute, private ngZone:NgZone, private router:Router) {}
 
   ngOnInit() {
     this.route.params
@@ -28,5 +28,17 @@ export class PartyDetailsComponent implements OnInit{
           });          
         });     
       });
+  }
+
+  saveParty() {
+    Parties.update(this.party._id, {
+      $set: {
+        name: this.party.name,
+        description: this.party.description,
+        location: this.party.location
+      }
+    }, () => {
+      this.router.navigate(['/']);
+    });
   }
 }
