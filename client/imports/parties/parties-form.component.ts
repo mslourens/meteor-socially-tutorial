@@ -25,7 +25,8 @@ export class PartiesFormComponent extends MeteorComponent implements OnInit {
     this.addForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: [],
-      location: ['', Validators.required]
+      location: ['', Validators.required],
+      public: [false]
     })
   };
 
@@ -33,11 +34,10 @@ export class PartiesFormComponent extends MeteorComponent implements OnInit {
     this.addForm.controls['name']['updateValue']('');
     this.addForm.controls['description']['updateValue']('');
     this.addForm.controls['location']['updateValue']('');
+    this.addForm.controls['public']['updateValue'](false);
  }
 
   add() {
-    console.log(this.addForm.value);
-
     if (this.addForm.valid) {
       if (Meteor.userId()) {
         Parties.insert(Object.assign({}, this.addForm.value, {owner: Meteor.userId()}));

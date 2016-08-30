@@ -4,4 +4,5 @@ export interface Party {
   location:string;
   _id?: string;
   owner?: string;
+  public: boolean;
 }

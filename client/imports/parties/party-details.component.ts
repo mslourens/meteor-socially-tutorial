@@ -5,17 +5,20 @@ import {Parties} from '../../../both/collections/parties.collection';
 import {Party} from '../../../both/models/party.model';
 import {Tracker} from 'meteor/tracker';
 import {ROUTER_DIRECTIVES} from '@angular/router';
+import {MeteorComponent} from 'angular2-meteor';
 
 @Component({
   selector: 'party-details',
   template,
   directives: [ROUTER_DIRECTIVES]
 })
-export class PartyDetailsComponent implements OnInit{
+export class PartyDetailsComponent extends MeteorComponent implements OnInit{
   partyId:string;
   party:Party;
 
-  constructor(private route:ActivatedRoute, private ngZone:NgZone, private router:Router) {}
+  constructor(private route:ActivatedRoute, private ngZone:NgZone, private router:Router) {
+    super();
+  }
 
   ngOnInit() {
     this.route.params
@@ -24,7 +27,9 @@ export class PartyDetailsComponent implements OnInit{
         this.partyId = partyId;
         Tracker.autorun(() => {
           this.ngZone.run(() => {
-            this.party = <Party>Parties.findOne(this.partyId);
+            this.subscribe('party', this.partyId, () => {
+              this.party = Parties.findOne(this.partyId);
+            }, true);
           });          
         });     
       });
@@ -40,5 +45,5 @@ export class PartyDetailsComponent implements OnInit{
     }, () => {
       this.router.navigate(['/']);
     });
-  }
+  } 
 }
