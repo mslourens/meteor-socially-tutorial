@@ -1,4 +1,8 @@
-<ul>
+<div>
+   <parties-form></parties-form>
+  <login-buttons></login-buttons>
+
+  <ul>
     <li *ngFor="let party of parties">
       <a [routerLink]="['party', party._id]">{{party.name}}</a>
       <p>{{party.description}}</p>
@@ -6,3 +10,4 @@
       <button (click)="remove(party)">X</button>
     </li>
   </ul>
+</div>
